@@ -1,0 +1,129 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <title>Minion matching game </title>
+    
+    
+    <style>
+        body{
+            background-color: yellowgreen;
+        }
+        img {
+            position: absolute;
+        }
+        h1,p{
+            color:#4747B3;
+          font-family: Comic Sans MS, Comic Sans,cursive;
+        }
+        p{
+            font-size:20px;
+          
+            padding-bottom: 20px;
+        }
+
+        div {
+/*            position: relative;*/
+            height: 500px;
+            width: 500px;
+        }
+        
+/*
+        #halves{
+            margin-top: 300px;
+            padding-top: 300px;
+            border:30px; 
+        }
+*/
+
+        #rightSide {
+            border-left: 3px solid yellow;
+            left: 320px;
+        }
+    </style>
+    
+    
+    
+   
+</head>
+
+<body id="the_body" onload="generateFaces()">
+    <div class="container fluid">
+        
+        <h1 class="text-center col-sm-6 col-sm-offset-3">Minion Matching Game</h1>
+        <p class="text-center col-sm-6 col-sm-offset-3">Click on the extra minion on the left</p>
+    
+<!--
+        <div class="row">
+    <h1 class="col-xs-12 col-sm-6 col-sm-offset-3">Matching game</h1>
+    <p class="col-xs-12 col-sm-6 col-sm-offset-3">Click on the extra smiling face on the left</p>
+        </div>
+-->
+        
+        <div  class="row">
+    <div id="leftSide" class="col-xs-12 col-sm-6"></div>
+    <div id="rightSide" class="col-xs-12 col-sm-6"></div>
+       
+    </div>
+</div>
+    
+     <script>
+        var numberOfFaces = 5;
+//         var theLeftSide=document.getElementById("leftSide");
+        function generateFaces() {
+          theLeftSide = document.getElementById("leftSide");
+
+            var i = 0;
+
+            while (i < numberOfFaces) {
+                var top_position = Math.floor(Math.random() * 400);
+                var left_position = Math.floor(Math.random() * 400);
+                var this_img = document.createElement("img");
+                //this_img.src = "smile.png";
+                this_img.setAttribute("src","http://res.cloudinary.com/geeta/image/upload/v1487791596/minion_mkz3xq.png");
+                this_img.style.top = top_position;
+                this_img.style.left = left_position;
+                theLeftSide.appendChild(this_img);
+                i++;
+
+            }
+
+            var leftSideImages = theLeftSide.cloneNode(true);
+            theRightSide = document.getElementById("rightSide");
+            console.log(theRightSide);
+            leftSideImages.removeChild(leftSideImages.lastChild);
+            theRightSide.appendChild(leftSideImages);
+
+
+
+
+            var theBody = document.getElementsByTagName("body")[0];
+            theLeftSide.lastChild.onclick = function nextlevel(event) {
+                event.stopPropagation();
+                while (theLeftSide.firstChild) {
+                    theLeftSide.removeChild(theLeftSide.firstChild);
+                }
+                while (theRightSide.firstChild) {
+                    theRightSide.removeChild(theRightSide.firstChild);
+                }
+                numberOfFaces += 5;
+                generateFaces();
+            }
+            theBody.onclick = function gameOver() {
+                alert("Oops!!wrong place.The game is over");
+                /*after this nothing should be executed.even if they click on the right smiley*/
+                theBody.onclick = null;
+                theLeftSide.lastChild.onclick = null;
+            }
+        }
+    </script>
+</body>
+
+</html>
+
+
+
+
